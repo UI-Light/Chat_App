@@ -1,13 +1,13 @@
 import 'package:chat_app2/views/shared/text_bar.dart';
 import 'package:flutter/material.dart';
 
-class ChatView extends StatefulWidget {
-  const ChatView({Key? key}) : super(key: key);
+class ChatScreen extends StatefulWidget {
+  const ChatScreen({Key? key}) : super(key: key);
   @override
-  State<ChatView> createState() => ChatViewState();
+  State<ChatScreen> createState() => ChatScreenState();
 }
 
-class ChatViewState extends State<ChatView> {
+class ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

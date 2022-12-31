@@ -1,3 +1,4 @@
+import 'package:chat_app2/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -9,6 +10,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  AuthenticationService auth = AuthenticationService();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   @override
@@ -108,7 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 10),
                   TextButton(
                     onPressed: () {},
                     child: Text(
@@ -125,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     //   password: passwordController.text.trim(),
                     // ),
                     child: Container(
-                      height: MediaQuery.of(context).size.height / 15,
+                      height: MediaQuery.of(context).size.height / 17,
                       width: MediaQuery.of(context).size.width / 1,
                       decoration: const BoxDecoration(
                         color: Colors.deepPurple,
@@ -141,7 +143,41 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 15),
+                  GestureDetector(
+                    onTap: () => auth.googleLogin(),
+                    child: Container(
+                      height: MediaQuery.of(context).size.height / 17,
+                      width: MediaQuery.of(context).size.width / 1,
+                      decoration: BoxDecoration(
+                        //color: Colors.transparent,
+                        border: Border.all(color: Colors.grey),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(12)),
+                      ),
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              'assets/google-icon.png',
+                              height: 20,
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "Signin with Google",
+                              style: GoogleFonts.notoSerif(
+                                color: Colors.black54,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 30),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

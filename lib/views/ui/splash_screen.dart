@@ -1,5 +1,6 @@
 import 'dart:async';
-import 'package:chat_app2/views/ui/login_screen.dart';
+//import 'package:chat_app2/views/ui/login_screen.dart';
+import 'package:chat_app2/views/shared/auth_wrapper.dart';
 import "package:flutter/material.dart";
 import 'package:google_fonts/google_fonts.dart';
 
@@ -20,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
         context,
         MaterialPageRoute(
           builder: ((context) {
-            return const LoginScreen();
+            return const AuthenticationWrapper();
           }),
         ),
       ),

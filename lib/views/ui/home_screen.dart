@@ -1,17 +1,17 @@
-//import 'package:chat_app/services/auth_service.dart';
+import 'package:chat_app2/services/auth_service.dart';
 import 'package:chat_app2/views/shared/user_tile.dart';
 import 'package:chat_app2/views/ui/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class HomePageView extends StatefulWidget {
-  const HomePageView({Key? key}) : super(key: key);
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<HomePageView> createState() => _HomePageViewState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomePageViewState extends State<HomePageView> {
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -56,7 +56,7 @@ class _HomePageViewState extends State<HomePageView> {
                 ),
               ),
               GestureDetector(
-                //  onTap: () => AuthenticationService().signOut(),
+                onTap: () => AuthenticationService().logOut(),
                 child: const ListTile(
                   leading: Icon(Icons.exit_to_app),
                   title: Text("Sign out"),
@@ -96,7 +96,7 @@ class _HomePageViewState extends State<HomePageView> {
           backgroundColor: Colors.deepPurple,
           onPressed: () {
             Navigator.of(context).push(
-                MaterialPageRoute(builder: ((context) => const ChatView())));
+                MaterialPageRoute(builder: ((context) => const ChatScreen())));
           },
           child: const Icon(Icons.person_add),
         ),
@@ -104,14 +104,3 @@ class _HomePageViewState extends State<HomePageView> {
     );
   }
 }
-
-// Column(
-//           children: [
-//             const Center(child: Text('ChatApp HomePage')),
-//             TextButton(
-//                 onPressed: () {
-//                   
-//                 },
-//                 child: const Text('Signout')),
-//           ],
-//         ),
