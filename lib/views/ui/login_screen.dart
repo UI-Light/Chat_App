@@ -1,4 +1,5 @@
 import 'package:chat_app2/services/auth_service.dart';
+import 'package:chat_app2/views/ui/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -13,6 +14,7 @@ class _LoginScreenState extends State<LoginScreen> {
   AuthenticationService auth = AuthenticationService();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -122,10 +124,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 30),
                   GestureDetector(
-                    // onTap: () => auth.signIn(
-                    //   email: emailController.text.trim(),
-                    //   password: passwordController.text.trim(),
-                    // ),
+                    onTap: () => auth.signIn(
+                      email: emailController.text.trim(),
+                      password: passwordController.text.trim(),
+                    ),
                     child: Container(
                       height: MediaQuery.of(context).size.height / 17,
                       width: MediaQuery.of(context).size.width / 1,
@@ -177,7 +179,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 50),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -190,7 +192,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
                               builder: (context) {
-                                return Container();
+                                return const SignupScreen();
                               },
                             ),
                           );

@@ -11,18 +11,46 @@ class AuthenticationService {
 
   //signin with google
   Future googleLogin() async {
-    final googleUser = await googleSignIn.signIn();
-    if (googleUser == null) return;
-    _user = googleUser;
+    try {
+      final googleUser = await googleSignIn.signIn();
+      if (googleUser == null) return;
+      _user = googleUser;
 
-    final googleAuth = await googleUser.authentication;
+      final googleAuth = await googleUser.authentication;
 
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
 
-    await firebaseAuth.signInWithCredential(credential);
+      await firebaseAuth.signInWithCredential(credential);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  // SignIn with Email and password
+  Future signIn({required String email, required String password}) async {
+    try {
+      await firebaseAuth.signInWithEmailAndPassword(
+          email: email, password: password);
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
+  //SignUp for new user
+  Future signUp(
+      {required String email,
+      required String password,
+      required String confirmPassword}) async {
+    try {
+      var result = await firebaseAuth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      return result.user;
+    } catch (e) {
+      return e.toString();
+    }
   }
 
   //signout
