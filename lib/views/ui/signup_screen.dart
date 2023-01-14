@@ -1,5 +1,6 @@
 import 'package:chat_app2/services/auth_service.dart';
 import 'package:chat_app2/utils/validator_utils.dart';
+import 'package:chat_app2/views/ui/home_screen.dart';
 import 'package:chat_app2/views/ui/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -157,19 +158,32 @@ class _SignupScreenState extends State<SignupScreen> {
                     GestureDetector(
                       onTap: () async {
                         if (_formKey.currentState!.validate()) {
+                          FocusScope.of(context).unfocus();
                           // print('New user ${usernameController.text}');
                           setState(() {
                             isLoading = true;
                           });
-                          await AuthenticationService.signUp(
+                          final user = await AuthenticationService.signUp(
                             username: usernameController.text.trim(),
                             email: emailController.text.trim(),
                             password: passwordController.text.trim(),
                             confirmPassword:
                                 confirmPasswordController.text.trim(),
                           );
+
+                          if (user != null) {
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: ((context) {
+                                  return const HomeScreen();
+                                }),
+                              ),
+                            );
+                          }
+                          setState(() {
+                            isLoading = false;
+                          });
                         }
-                        FocusScope.of(context).unfocus();
                       },
                       child: Container(
                         height: MediaQuery.of(context).size.height / 15,

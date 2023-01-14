@@ -1,15 +1,18 @@
+import 'package:chat_app2/models/user.dart';
 import 'package:chat_app2/views/shared/messages.dart';
 import 'package:chat_app2/views/shared/messages_bar.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class ChatScreen extends StatefulWidget {
-  const ChatScreen({Key? key}) : super(key: key);
-  @override
-  State<ChatScreen> createState() => ChatScreenState();
-}
+class ChatScreen extends StatelessWidget {
+  final AppUser user;
+  final String chatRoomId;
 
-class ChatScreenState extends State<ChatScreen> {
+  const ChatScreen({
+    Key? key,
+    required this.user,
+    required this.chatRoomId,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,14 +28,14 @@ class ChatScreenState extends State<ChatScreen> {
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children: [
                 Text(
-                  "Acemma",
-                  style: TextStyle(
+                  user.displayName,
+                  style: const TextStyle(
                     color: Colors.black,
                   ),
                 ),
-                Text(
+                const Text(
                   'Last seen 12:00pm',
                   style: TextStyle(
                     fontSize: 11,
@@ -61,11 +64,11 @@ class ChatScreenState extends State<ChatScreen> {
         ],
       ),
       body: Column(
-        children: const [
+        children: [
           Expanded(
-            child: Messages(),
+            child: Messages(chatRoomId: chatRoomId),
           ),
-          MessagesBar(),
+          MessagesBar(chatRoomId: chatRoomId),
         ],
       ),
     );

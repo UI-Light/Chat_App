@@ -1,4 +1,5 @@
 import 'package:chat_app2/services/auth_service.dart';
+import 'package:chat_app2/views/ui/home_screen.dart';
 import 'package:chat_app2/views/ui/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -125,12 +126,25 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 30),
                   GestureDetector(
                     onTap: () async {
-                      await AuthenticationService.signIn(
+                      setState(() {
+                        isLoading = true;
+                      });
+                      final user = await AuthenticationService.signIn(
                         email: emailController.text.trim(),
                         password: passwordController.text.trim(),
                       );
+
+                      if (user != null) {
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: ((context) {
+                              return const HomeScreen();
+                            }),
+                          ),
+                        );
+                      }
                       setState(() {
-                        isLoading = true;
+                        isLoading = false;
                       });
                     },
                     child: Container(

@@ -1,3 +1,4 @@
+import 'package:chat_app2/services/auth_service.dart';
 import 'package:chat_app2/views/ui/home_screen.dart';
 import 'package:chat_app2/views/ui/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -28,7 +29,21 @@ class _AuthenticationWrapperState extends State<AuthenticationWrapper> {
               child: Text('Something Went Wrong!'),
             );
           } else if (snapshot.hasData) {
-            return const HomeScreen();
+            return FutureBuilder(
+              future:
+                  AuthenticationService.getUser((snapshot.data as User).uid),
+              builder: (_, snapshot) {
+                if (snapshot.hasData) return const HomeScreen();
+                if (snapshot.hasError) {
+                  return const Center(
+                    child: Text('Something Went Wrong!'),
+                  );
+                }
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
+            );
           } else {
             return const LoginScreen();
           }

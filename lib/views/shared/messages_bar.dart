@@ -3,7 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class MessagesBar extends StatefulWidget {
-  const MessagesBar({Key? key}) : super(key: key);
+  final String chatRoomId;
+  const MessagesBar({
+    Key? key,
+    required this.chatRoomId,
+  }) : super(key: key);
 
   @override
   State<MessagesBar> createState() => _MessagesBarState();
@@ -17,7 +21,7 @@ class _MessagesBarState extends State<MessagesBar> {
     FocusScope.of(context).unfocus();
     final user = FirebaseAuth.instance.currentUser!;
 
-    FirebaseFirestore.instance.collection('Chats').add({
+    FirebaseFirestore.instance.collection(widget.chatRoomId).add({
       'text': enteredMessage,
       'createdAt': Timestamp.now(),
       'userId': user.uid,

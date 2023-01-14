@@ -1,6 +1,9 @@
+import 'package:chat_app2/models/user.dart';
 import 'package:chat_app2/services/auth_service.dart';
 import 'package:chat_app2/views/shared/user_tile.dart';
 import 'package:chat_app2/views/ui/chat_screen.dart';
+import 'package:chat_app2/views/ui/login_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -58,7 +61,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               GestureDetector(
-                onTap: () => AuthenticationService.logOut(),
+                onTap: () async {
+                  await AuthenticationService.logOut();
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: ((context) {
+                        return const LoginScreen();
+                      }),
+                    ),
+                  );
+                },
                 child: const ListTile(
                   leading: Icon(Icons.exit_to_app),
                   title: Text("Sign out"),
@@ -84,31 +96,31 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         backgroundColor: Colors.white,
-        body: ListView.builder(
-            itemBuilder: (context, index) => UserTile(), itemCount: 10),
-        // body: StreamBuilder(
-        //     stream: FirebaseFirestore.instance
-        //         .collection("Chats/H3eiqdJDjvGYDWCirmB9/Messages")
-        //         .snapshots(),
-        //     builder: (context, snapshot) {
-        //       if (snapshot.connectionState == ConnectionState.waiting) {
-        //         return const Center(
-        //           child: CircularProgressIndicator(),
-        //         );
-        //       }
-        //       return ListView.builder(
-        //         itemBuilder: (context, index) => UserTile(),
-        //         itemCount: 10
-        //       );
-        //     }),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.deepPurple,
-          onPressed: () {
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: ((context) => const ChatScreen())));
-          },
-          child: const Icon(Icons.person_add),
-        ),
+        // body: ListView.builder(
+        //     itemBuilder: (context, index) => UserTile(), itemCount: 10),
+        body: StreamBuilder(
+            stream: FirebaseFirestore.instance.collection("Users").snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+
+              if (snapshot.hasData) {
+                final users = List<AppUser>.from(
+                    (snapshot.data as QuerySnapshot).docs.map((e) {
+                  return AppUser.fromJson(e.data() as Map<String, dynamic>);
+                }));
+                return ListView.builder(
+                  itemBuilder: (context, index) => UserTile(
+                    user: users[index],
+                  ),
+                  itemCount: users.length,
+                );
+              }
+              return const SizedBox();
+            }),
       ),
     );
   }

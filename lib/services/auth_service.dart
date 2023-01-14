@@ -60,8 +60,26 @@ class AuthenticationService {
     }
   }
 
+  static Future<AppUser?> getUser(String id) async {
+    try {
+      _currentUser = await firestore
+          .collection("Users")
+          .where("id", isEqualTo: id)
+          .get()
+          .then(
+            (data) => AppUser.fromJson(
+              data.docs.first.data(),
+            ),
+          );
+
+      return _currentUser;
+    } catch (e) {
+      return null;
+    }
+  }
+
   // SignIn with Email and password
-  static Future signIn(
+  static Future<AppUser?> signIn(
       {required String email, required String password}) async {
     try {
       final userCred = await firebaseAuth.signInWithEmailAndPassword(
@@ -78,8 +96,11 @@ class AuthenticationService {
               data.docs.first.data(),
             ),
           );
+
+      return _currentUser;
     } catch (e) {
-      return e.toString();
+      // return e.toString();
+      return null;
     }
   }
 
@@ -103,17 +124,21 @@ class AuthenticationService {
       _currentUser = user;
 
       await firestore.collection('Users').add(user.toJson());
-      print(user.toJson());
-      return user;
+      return _currentUser;
     } catch (e) {
-      return e.toString();
+      // return e.toString();
+      return null;
     }
   }
 
   //signout
   static Future logOut() async {
-    _currentUser = null;
-    await googleSignIn.disconnect();
-    firebaseAuth.signOut();
+    try {
+      _currentUser = null;
+      try {
+        await googleSignIn.disconnect();
+      } catch (e) {}
+      await firebaseAuth.signOut();
+    } catch (e) {}
   }
 }
