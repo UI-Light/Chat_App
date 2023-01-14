@@ -14,6 +14,7 @@ class _LoginScreenState extends State<LoginScreen> {
   AuthenticationService auth = AuthenticationService();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  var isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -124,10 +125,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 30),
                   GestureDetector(
-                    onTap: () => auth.signIn(
-                      email: emailController.text.trim(),
-                      password: passwordController.text.trim(),
-                    ),
+                    onTap: () async {
+                      await auth.signIn(
+                        email: emailController.text.trim(),
+                        password: passwordController.text.trim(),
+                      );
+                      setState(() {
+                        isLoading = true;
+                      });
+                    },
                     child: Container(
                       height: MediaQuery.of(context).size.height / 17,
                       width: MediaQuery.of(context).size.width / 1,
@@ -136,23 +142,29 @@ class _LoginScreenState extends State<LoginScreen> {
                         borderRadius: BorderRadius.all(Radius.circular(12)),
                       ),
                       child: Center(
-                        child: Text(
-                          "Login",
-                          style: GoogleFonts.notoSerif(
-                            color: Colors.white,
-                          ),
-                        ),
+                        child: isLoading
+                            ? const CircularProgressIndicator(
+                                valueColor:
+                                    AlwaysStoppedAnimation(Colors.white),
+                              )
+                            : Text(
+                                "Login",
+                                style: GoogleFonts.notoSerif(
+                                  color: Colors.white,
+                                ),
+                              ),
                       ),
                     ),
                   ),
                   const SizedBox(height: 15),
                   GestureDetector(
-                    onTap: () => auth.googleLogin(),
+                    onTap: () async {
+                      await auth.googleLogin();
+                    },
                     child: Container(
                       height: MediaQuery.of(context).size.height / 17,
                       width: MediaQuery.of(context).size.width / 1,
                       decoration: BoxDecoration(
-                        //color: Colors.transparent,
                         border: Border.all(color: Colors.grey),
                         borderRadius:
                             const BorderRadius.all(Radius.circular(12)),

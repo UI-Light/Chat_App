@@ -11,10 +11,10 @@ class UserTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: CircleAvatar(
-        backgroundImage: NetworkImage(user.photoURL!),
+        backgroundImage: user == null ? null : NetworkImage(user.photoURL!),
       ),
       title: Text(
-        user.displayName!,
+        user.displayName ?? "Empty",
         style: GoogleFonts.roboto(
           fontSize: 18,
         ),

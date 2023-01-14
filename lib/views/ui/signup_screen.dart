@@ -12,10 +12,12 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
+  TextEditingController usernameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
   final AuthenticationService auth = AuthenticationService();
+  var isLoading = false;
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -60,27 +62,27 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    // TextFormField(
-                    //   validator: (value) => Validator.validateUsername(value!),
-                    //   controller: usernameController,
-                    //   decoration: InputDecoration(
-                    //     border: const OutlineInputBorder(
-                    //       borderRadius: BorderRadius.all(Radius.circular(15)),
-                    //     ),
-                    //     focusedBorder: OutlineInputBorder(
-                    //       borderSide: const BorderSide(
-                    //         color: Colors.deepPurple,
-                    //         width: 2.0,
-                    //       ),
-                    //       borderRadius: BorderRadius.circular(15),
-                    //     ),
-                    //     hintText: 'Username',
-                    //     hintStyle: GoogleFonts.roboto(
-                    //       fontSize: 16,
-                    //     ),
-                    //   ),
-                    // ),
-                    const SizedBox(height: 10),
+                    TextFormField(
+                      validator: (value) => Validator.validateUsername(value!),
+                      controller: usernameController,
+                      decoration: InputDecoration(
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: Colors.deepPurple,
+                            width: 2.0,
+                          ),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        hintText: 'Username',
+                        hintStyle: GoogleFonts.roboto(
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
                     TextFormField(
                       keyboardType: TextInputType.emailAddress,
                       validator: (value) => Validator.validateEmail(value!),
@@ -157,13 +159,18 @@ class _SignupScreenState extends State<SignupScreen> {
                       onTap: () async {
                         if (_formKey.currentState!.validate()) {
                           // print('New user ${usernameController.text}');
+                          setState(() {
+                            isLoading = true;
+                          });
                           await auth.signUp(
-                            email: emailController.text,
+                            username: usernameController.text.trim(),
+                            email: emailController.text.trim(),
                             password: passwordController.text.trim(),
-                            confirmPassword: confirmPasswordController.text,
+                            confirmPassword:
+                                confirmPasswordController.text.trim(),
                           );
                         }
-                        //FocusScope.of(context).unfocus();
+                        FocusScope.of(context).unfocus();
                       },
                       child: Container(
                         height: MediaQuery.of(context).size.height / 15,
@@ -173,12 +180,17 @@ class _SignupScreenState extends State<SignupScreen> {
                           borderRadius: BorderRadius.all(Radius.circular(12)),
                         ),
                         child: Center(
-                          child: Text(
-                            "SignUp",
-                            style: GoogleFonts.notoSerif(
-                              color: Colors.white,
-                            ),
-                          ),
+                          child: isLoading
+                              ? const CircularProgressIndicator(
+                                  valueColor:
+                                      AlwaysStoppedAnimation(Colors.white),
+                                )
+                              : Text(
+                                  "SignUp",
+                                  style: GoogleFonts.notoSerif(
+                                    color: Colors.white,
+                                  ),
+                                ),
                         ),
                       ),
                     ),

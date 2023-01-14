@@ -21,4 +21,12 @@ class Validator {
       return 'Enter a valid email';
     }
   }
+
+  static String? validateUsername(String value) {
+    if (value.isEmpty) {
+      return 'Username cannot be empty';
+    } else {
+      return null;
+    }
+  }
 }

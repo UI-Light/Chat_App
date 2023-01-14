@@ -1,4 +1,6 @@
-import 'package:chat_app2/views/shared/text_bar.dart';
+import 'package:chat_app2/views/shared/messages.dart';
+import 'package:chat_app2/views/shared/messages_bar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -13,19 +15,14 @@ class ChatScreenState extends State<ChatScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        leading: IconButton(
-          onPressed: () {},
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.black,
+        leading: const Padding(
+          padding: EdgeInsets.only(left: 8.0, top: 8.0, bottom: 8.0),
+          child: CircleAvatar(
+            backgroundImage: AssetImage('assets/saitama.jpg'),
           ),
         ),
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            const CircleAvatar(
-              backgroundImage: AssetImage('assets/saitama.jpg'),
-            ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: const [
@@ -65,10 +62,10 @@ class ChatScreenState extends State<ChatScreen> {
       ),
       body: Column(
         children: const [
-          Center(
-            child: Text('Body'),
+          Expanded(
+            child: Messages(),
           ),
-          TextBar(),
+          MessagesBar(),
         ],
       ),
     );

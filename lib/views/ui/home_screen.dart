@@ -86,21 +86,23 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         backgroundColor: Colors.white,
-        body: StreamBuilder(
-            stream: FirebaseFirestore.instance
-                .collection("Chats/H3eiqdJDjvGYDWCirmB9/Messages")
-                .snapshots(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              return ListView.builder(
-                itemBuilder: (context, index) => UserTile(),
-                itemCount: 10, //snapshot.data.documents.length,
-              );
-            }),
+        body: ListView.builder(
+            itemBuilder: (context, index) => UserTile(), itemCount: 10),
+        // body: StreamBuilder(
+        //     stream: FirebaseFirestore.instance
+        //         .collection("Chats/H3eiqdJDjvGYDWCirmB9/Messages")
+        //         .snapshots(),
+        //     builder: (context, snapshot) {
+        //       if (snapshot.connectionState == ConnectionState.waiting) {
+        //         return const Center(
+        //           child: CircularProgressIndicator(),
+        //         );
+        //       }
+        //       return ListView.builder(
+        //         itemBuilder: (context, index) => UserTile(),
+        //         itemCount: 10
+        //       );
+        //     }),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.deepPurple,
           onPressed: () {
