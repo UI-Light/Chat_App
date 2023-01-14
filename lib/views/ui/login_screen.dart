@@ -11,7 +11,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  AuthenticationService auth = AuthenticationService();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   var isLoading = false;
@@ -126,7 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 30),
                   GestureDetector(
                     onTap: () async {
-                      await auth.signIn(
+                      await AuthenticationService.signIn(
                         email: emailController.text.trim(),
                         password: passwordController.text.trim(),
                       );
@@ -159,7 +158,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 15),
                   GestureDetector(
                     onTap: () async {
-                      await auth.googleLogin();
+                      await AuthenticationService.googleLogin();
                     },
                     child: Container(
                       height: MediaQuery.of(context).size.height / 17,

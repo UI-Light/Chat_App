@@ -16,7 +16,6 @@ class _SignupScreenState extends State<SignupScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
-  final AuthenticationService auth = AuthenticationService();
   var isLoading = false;
   final _formKey = GlobalKey<FormState>();
 
@@ -162,7 +161,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           setState(() {
                             isLoading = true;
                           });
-                          await auth.signUp(
+                          await AuthenticationService.signUp(
                             username: usernameController.text.trim(),
                             email: emailController.text.trim(),
                             password: passwordController.text.trim(),

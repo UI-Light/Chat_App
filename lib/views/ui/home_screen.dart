@@ -1,10 +1,8 @@
 import 'package:chat_app2/services/auth_service.dart';
 import 'package:chat_app2/views/shared/user_tile.dart';
 import 'package:chat_app2/views/ui/chat_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -14,7 +12,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final user = FirebaseAuth.instance.currentUser!;
+  final user = AuthenticationService.currentUser!;
 
   @override
   Widget build(BuildContext context) {
@@ -26,19 +24,19 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.only(top: 20.0),
                 child: CircleAvatar(
-                  backgroundImage: NetworkImage(user.photoURL!),
+                  backgroundImage: NetworkImage(user.photoURL ?? ""),
                   radius: 60.0,
                 ),
               ),
               const SizedBox(height: 10),
               Text(
-                user.displayName!,
+                user.displayName,
                 style: GoogleFonts.notoSerif(
                   fontSize: 18.0,
                 ),
               ),
               Text(
-                user.email!,
+                user.email,
                 style: const TextStyle(fontSize: 14.0, color: Colors.grey),
               ),
               const SizedBox(height: 10),
@@ -60,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               GestureDetector(
-                onTap: () => AuthenticationService().logOut(),
+                onTap: () => AuthenticationService.logOut(),
                 child: const ListTile(
                   leading: Icon(Icons.exit_to_app),
                   title: Text("Sign out"),

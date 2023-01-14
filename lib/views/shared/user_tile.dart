@@ -9,9 +9,11 @@ class UserTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(user.displayName);
     return ListTile(
       leading: CircleAvatar(
-        backgroundImage: user == null ? null : NetworkImage(user.photoURL!),
+        backgroundImage:
+            user.photoURL == null ? null : NetworkImage(user.photoURL!),
       ),
       title: Text(
         user.displayName ?? "Empty",
