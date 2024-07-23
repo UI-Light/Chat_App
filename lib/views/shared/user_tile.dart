@@ -38,16 +38,16 @@ class UserTile extends StatelessWidget {
         ),
         title: Text(
           user.displayName,
-          style: GoogleFonts.roboto(
+          style: GoogleFonts.poppins(
             fontSize: 18,
           ),
         ),
-        subtitle: const Text(
-          'Hey human i didn\'t see you in school today lorem ipsum blah blah',
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-        trailing: const Text('12:30pm'),
+        // subtitle: const Text(
+        //   '',
+        //   maxLines: 1,
+        //   overflow: TextOverflow.ellipsis,
+        // ),
+        //trailing: const Text('12:30pm'),
       ),
     );
   }

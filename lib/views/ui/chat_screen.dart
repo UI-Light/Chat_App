@@ -18,10 +18,12 @@ class ChatScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        leading: const Padding(
-          padding: EdgeInsets.only(left: 8.0, top: 8.0, bottom: 8.0),
+        leading:  Padding(
+          padding: const EdgeInsets.only(left: 8.0, top: 8.0, bottom: 8.0),
           child: CircleAvatar(
-            backgroundImage: AssetImage('assets/saitama.jpg'),
+            child: user.photoURL == null
+              ? Text(user.displayName.substring(0, 2).toUpperCase())
+              : null,
           ),
         ),
         title: Row(
@@ -35,13 +37,13 @@ class ChatScreen extends StatelessWidget {
                     color: Colors.black,
                   ),
                 ),
-                const Text(
-                  'Last seen 12:00pm',
-                  style: TextStyle(
-                    fontSize: 11,
-                    color: Colors.black,
-                  ),
-                ),
+                // const Text(
+                //   'Last seen 12:00pm',
+                //   style: TextStyle(
+                //     fontSize: 11,
+                //     color: Colors.black,
+                //   ),
+                // ),
               ],
             )
           ],

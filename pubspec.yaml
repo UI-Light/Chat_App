@@ -27,7 +27,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  google_fonts: ^3.0.1
+  google_fonts: ^6.2.1
   firebase_auth: ^4.2.3
   firebase_core: ^2.4.0
   firebase_storage: ^11.0.9

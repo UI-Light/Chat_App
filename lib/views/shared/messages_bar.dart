@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 class MessagesBar extends StatefulWidget {
   final String chatRoomId;
+  
   const MessagesBar({
     Key? key,
     required this.chatRoomId,

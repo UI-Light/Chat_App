@@ -27,8 +27,10 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.only(top: 20.0),
                 child: CircleAvatar(
-                  backgroundImage: NetworkImage(user.photoURL ?? ""),
-                  radius: 60.0,
+ child: user.photoURL == null
+              ? Text(user.displayName.substring(0, 2).toUpperCase())
+              : null,                  
+              radius: 60.0,
                 ),
               ),
               const SizedBox(height: 10),
@@ -80,8 +82,9 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         appBar: AppBar(
-          backgroundColor: Colors.black,
-          elevation: 0.0,
+  
+        // backgroundColor: Theme.of(context).colorScheme.primary,
+          elevation: 1.0,
           title: Text(
             'ChatApp',
             style: GoogleFonts.abel(
